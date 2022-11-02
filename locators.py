@@ -8,7 +8,7 @@ driver.find_element(By.ID, "twotabsearchbox").send_keys("Coffee")
 
 # By XPATH
 XPATH="//tagname[@attribute='value']"
-driver=webdriver.Chrome(executable_path ='/users/')
+driver=webdriver.Chrome(executable_path='/users/')
 
 #By XPATH
 driver.find_element(By.XPATH, "//@href='ref=nav_logo']")
