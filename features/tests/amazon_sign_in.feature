@@ -10,3 +10,9 @@ Feature: Amazon Sign In
     Given Open the Amazon Page
     And Click on the Cart icon
     Then Verify that "Your Amazon Cart is empty" message is displayed
+
+
+
+  Scenario: Verify that User is able to see there are '5 links' when clicking on 'Amazon Best Sellers' button
+    Given Open the Amazon Bestseller  Page
+    Then Verify that user is able to see 5 links

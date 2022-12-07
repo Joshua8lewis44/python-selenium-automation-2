@@ -54,3 +54,15 @@ def step_impl(context):
     expected_text = "Your Amazon Cart is empty"
     actual_text = context.driver.find_element(By.XPATH, "//div[@class='a-row sc-your-amazon-cart-is-empty']/h2").text
     assert expected_text == actual_text, f'Expected Text not found, but found [{actual_text}]'
+
+
+@given("Open the Amazon Bestseller  Page")
+def step_impl(context):
+    context.driver.get("https://www.amazon.com/gp/bestsellers/?ref_=nav_cs_bestsellers")
+
+
+@then('Verify that user is able to see {expected_links} links')
+def step_impl(context, expected_links):
+    links = context.driver.find_elements(By.XPATH, "//div[@class='_p13n-zg-nav-tab-all_style_zg-tabs__EYPLq']/ul/li/div/a")
+    actual_link_count = len(links)
+    assert  expected_links == str(actual_link_count), f"Expected {expected_links} links but found {str(actual_link_count)} links"
