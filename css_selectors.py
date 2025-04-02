@@ -10,30 +10,43 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 
-# get the path to the ChromeDriver executable
+# Get the path to the ChromeDriver executable
 driver_path = ChromeDriverManager().install()
 
-# create a new Chrome browser instance
+# Create a new Chrome browser instance
 service = Service(driver_path)
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(service=service)
 driver.maximize_window()
 
-# open the Amazon Create Account page
+# Open the Amazon Create Account page
 driver.get('https://www.amazon.com/ap/register')
 
-# Fill out the registration form using optimal CSS selectors
-driver.find_element(By.CSS_SELECTOR, "input#ap_customer_name").send_keys("John Doe")
-driver.find_element(By.CSS_SELECTOR, "input#ap_email").send_keys("johndoe@example.com")
-driver.find_element(By.CSS_SELECTOR, "input#ap_password").send_keys("SecureP@ssw0rd")
-driver.find_element(By.CSS_SELECTOR, "input#ap_password_check").send_keys("SecureP@ssw0rd")
+# Wait until the elements are present
+try:
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[name="customerName"]')))
+    driver.find_element(By.CSS_SELECTOR, 'input[name="customerName"]').send_keys("Test User")
 
-# Submit the registration form
-driver.find_element(By.CSS_SELECTOR, "input#continue").click()
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[name="email"]')))
+    driver.find_element(By.CSS_SELECTOR, 'input[name="email"]').send_keys("testuser@example.com")
 
-# Optional: wait to verify the action
-sleep(5)
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[name="password"]')))
+    driver.find_element(By.CSS_SELECTOR, 'input[name="password"]').send_keys("TestPassword123")
 
-# Close the browser after completion
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[name="passwordCheck"]')))
+    driver.find_element(By.CSS_SELECTOR, 'input[name="passwordCheck"]').send_keys("TestPassword123")
+
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '#continue')))
+    driver.find_element(By.CSS_SELECTOR, '#continue').click()
+
+except Exception as e:
+    print(f"Error: {e}")
+
+# Close the browser window
 driver.quit()
-
