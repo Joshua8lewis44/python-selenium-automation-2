@@ -1,6 +1,14 @@
-# Created by joshzz at 4/3/25
-Feature: # Enter feature name here
-  # Enter feature description here
+Feature: Search and Cart functionality on Target website
 
-  Scenario: # Enter scenario name here
-    # Enter steps here
+  Scenario Outline: Search for a product and view cart
+    Given I am on the Target website
+    When I search for "<product>"
+    Then I should see search results for "<product>"
+    When I click on the cart icon
+    Then I should be taken to the cart page
+
+  Examples:
+    | product   |
+    | iPhone    |
+    | MacBook   |
+    | AirPods   |
