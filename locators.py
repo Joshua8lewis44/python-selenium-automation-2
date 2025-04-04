@@ -1,6 +1,19 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 # 1 Repeat everything I coded during the class
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from time import sleep
+
+#get the path from webdriver executable
+driver_path = ChromeDriverManager().install()
+
+#create a new chrome browser instance
+service = Service(driver_path)
+driver = webdriver.Chrome(service=service)
+driver.maximize_window()
 
 driver = webdriver.Chrome(executable_path="C:\\Users\\owner\\Desktop\\Automation\\python-selenium-automation\\chromedriver.exe")
 driver.get('https://www.amazon.com/')
