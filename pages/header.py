@@ -1,25 +1,19 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import Page
 
+
 class Header(Page):
-    # Locators
-    SEARCH_BAR = (By.CSS_SELECTOR, "input[aria-label='Search']")
-    LOGO = (By.CSS_SELECTOR, "a[aria-label='Go to homepage']")
-    ACCOUNT_MENU = (By.CSS_SELECTOR, "button[aria-label='Account menu']")
-    CART_ICON = (By.CSS_SELECTOR, "button[aria-label='Cart icon']")
-    SIGN_IN_LINK = (By.CSS_SELECTOR, "[data-test='signInLink']")
+    SEARCH_FIELD = (By.ID, 'search')
+    SEARCH_BTN = (By.XPATH, "//button[@data-test='@web/Search/SearchButton']")
+    CART_ICON = (By.CSS_SELECTOR, "[data-test='@web/CartLink']")
 
-    def click_sign_in(self):
-        self.click(*self.SIGN_IN_LINK)
+    def search(self, text):
+        self.input_text(text, *self.SEARCH_FIELD)
+        self.click(*self.SEARCH_BTN)
 
-    def search_for_product(self, product_name):
-        self.send_keys(*self.SEARCH_BAR, product_name)
+        Expand
+        Down
 
-    def click_logo(self):
-        self.click(*self.LOGO)
 
-    def open_account_menu(self):
-        self.click(*self.ACCOUNT_MENU)
-
-    def view_cart(self):
-        self.click(*self.CART_ICON)
+def click_cart(self):
+    self.click(*self.CART_ICON)

@@ -1,14 +1,9 @@
-Feature: Search and Cart functionality on Target website
+Feature: Main page UI test
+  Scenario: Verify header links has at least 1 link
+    Given Open target main page
+    Then Verify at least 1 link shown
 
-  Scenario Outline: Search for a product and view cart
-    Given I am on the Target website
-    When I search for "<product>"
-    Then I should see search results for "<product>"
-    When I click on the cart icon
-    Then I should be taken to the cart page
-
-  Examples:
-    | product   |
-    | iPhone    |
-    | MacBook   |
-    | AirPods   |
+  @smoke
+  Scenario: Verify all header links shown
+    Given Open target main page
+    Then Verify 6 links shown
