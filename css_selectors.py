@@ -12,35 +12,25 @@ service = Service(driver_path)
 driver = webdriver.Chrome()
 driver.maximize_window()
 
-# open the url
-driver.get('https://www.amazon.com/')
+# open the Amazon Create Account page directly
+driver.get('https://www.amazon.com/ap/register')
 
-# CSS, by ID => #
-driver.find_element(By.CSS_SELECTOR, '#twotabsearchtextbox') # (By.ID, 'twotabsearchtextbox')
-# CSS, by ID and tag
-driver.find_element(By.CSS_SELECTOR, 'input#twotabsearchtextbox')
+# CSS Selectors for Create Account Page
 
-# CSS, class => .
-driver.find_element(By.CSS_SELECTOR, '.icp-nav-flag-us')
-driver.find_element(By.CSS_SELECTOR, '.icp-nav-flag-us.icp-nav-flag')
-driver.find_element(By.CSS_SELECTOR, '.icp-nav-flag.icp-nav-flag-us')
-# CSS, class and tag
-driver.find_element(By.CSS_SELECTOR, 'span.icp-nav-flag.icp-nav-flag-us')
-# CSS, tag, id, class
-driver.find_element(By.CSS_SELECTOR, "input#twotabsearchtextbox.nav-progressive-attribute")
+# Amazon Logo
+driver.find_element(By.CSS_SELECTOR, 'i.a-icon.a-icon-logo')
 
-# CSS, attributes => []
-driver.find_element(By.CSS_SELECTOR, "[aria-label='Search Amazon']")
-driver.find_element(By.CSS_SELECTOR, "[name='field-keywords']")
-driver.find_element(By.CSS_SELECTOR, "[name='field-keywords'][aria-label='Search Amazon']")
-driver.find_element(By.CSS_SELECTOR, "input[name='field-keywords'][aria-label='Search Amazon']")
+# Header: "Sign in or create account"
+driver.find_element(By.CSS_SELECTOR, 'h1.a-size-medium-plus.a-spacing-small')
 
-driver.find_element(By.CSS_SELECTOR, ".nav-input[name='field-keywords'][aria-label='Search Amazon']")
-driver.find_element(By.CSS_SELECTOR, "input.nav-input[name='field-keywords'][aria-label='Search Amazon']")
+# "Enter mobile number or email" paragraph
+driver.find_element(By.CSS_SELECTOR, 'p.a-spacing-micro.a-text-bold')
 
-# CSS, attributes, contains => *= []
-driver.find_element(By.CSS_SELECTOR, "[aria-label*='Amazon']")
-driver.find_element(By.CSS_SELECTOR, "[data-test='accountNav-signIn']")
-driver.find_element(By.CSS_SELECTOR, "[class*='styles_ndsBaseButton'][class*='styles_ndsButtonPrimary']")
+# Continue Button
+driver.find_element(By.CSS_SELECTOR, 'input.a-button-input[type="submit"][aria-labelledby="continue-announce"]')
 
-# Note: CSS cannot connect to text()
+# Conditions of Use link
+driver.find_element(By.CSS_SELECTOR, 'a[href*="condition_of_use"]')
+
+# Privacy Notice link
+driver.find_element(By.CSS_SELECTOR, 'a[href*="privacy_notice"]')
