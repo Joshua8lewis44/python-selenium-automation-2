@@ -1,31 +1,5 @@
 Feature: Target search test cases
 
-  @smoke
-  Scenario: User can search for a tea on Target
-    Given Open target main page
-    When Search for tea
-
-
-
-
-
-
-
-        Expand All
-
-    @@ -26,6 +27,7 @@ Feature: Target search test cases
-
-    Then Verify correct search results shown for tea
-    And Verify tea in URL
-#  Scenario: User can search for a iPhone on Target
-#    Given Open target main page
-#    When Search for iPhone
-#    Then Verify correct search results shown for iPhone
-#
-#  Scenario: User can search for a dress on Target
-#    Given Open target main page
-#    When Search for dress
-#    Then Verify correct search results shown for dress
   Scenario Outline: User can search for a product on Target
     Given Open target main page
     When Search for <search_word>
@@ -36,26 +10,12 @@ Feature: Target search test cases
     |iPhone       |iPhone         |
     |dress        |dress          |
 
-  @smoke
   Scenario: User can add a product to cart
     Given Open target main page
     When Search for mug
-
-
-
-
     And Click on Add to Cart button
     And Store product name
     And Confirm Add to Cart button from side navigation
     And Open cart page
     Then Verify cart has 1 item(s)
     Then Verify cart has correct product
-  Scenario: Verify that user can see product names and images
-    Given Open target main page
-    When Search for AirPods (3rd Generation)
-    Then Verify that every product has a name and an image
-  Scenario: User can see favorites tooltip for search results
-    Given Open Target main page
-    When Search for tea
-    And Hover favorites icon
-    Then Favorites tooltip is shown

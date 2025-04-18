@@ -1,20 +1,39 @@
 from selenium.webdriver.common.by import By
-from pages.base_page import Page
+from behave import given, then
+from selenium.webdriver.support import expected_conditions as EC
 
-class ProductDetailsPage(Page):
-    # Locators for product details page
-    PRODUCT_NAME = (By.CSS_SELECTOR, "h1.product-name")
-    ADD_TO_CART_BUTTON = (By.CSS_SELECTOR, "[data-test='add-to-cart-button']")
-    PRODUCT_PRICE = (By.CSS_SELECTOR, ".product-price")
+COLOR_OPTIONS = (By.CSS_SELECTOR, "div[data-test='colorSwatch'] li img")
+SELECTED_COLOR = (By.CSS_SELECTOR, "[data-test='@web/VariationComponent'] div")
 
-    def add_to_cart(self):
-        self.click(*self.ADD_TO_CART_BUTTON)
+@given('Open target product {product_id} page')
+def open_target_product(context, product_id):
+    context.driver.get(f'https://www.target.com/p/{product_id}')
+    context.driver.wait.until(
+        EC.presence_of_element_located(COLOR_OPTIONS),
+        message='Color swatches did not load'
+    )
 
-    def get_product_name(self):
-        element = self.find_element(*self.PRODUCT_NAME)
-        return element.text
+@then('Verify user can click through and confirm colors')
+def click_and_verify_each_color(context):
+    colors = context.driver.find_elements(*COLOR_OPTIONS)
+    selected_colors = []
 
-    def get_product_price(self):
-        element = self.find_element(*self.PRODUCT_PRICE)
-        return element.text
+    for index in range(len(colors)):
+        # Re-locate the elements each time to avoid stale element error
+        colors = context.driver.find_elements(*COLOR_OPTIONS)
+        color = colors[index]
+        context.driver.execute_script("arguments[0].scrollIntoView(true);", color)
+        color.click()
 
+        context.driver.wait.until(
+            EC.visibility_of_element_located(SELECTED_COLOR),
+            message='Selected color not visible'
+        )
+
+        selected_text = context.driver.find_element(*SELECTED_COLOR).text
+        color_name = selected_text.split("\n")[1] if '\n' in selected_text else selected_text
+        print(f"Selected color: {color_name}")
+        selected_colors.append(color_name)
+
+    print("All selected colors:", selected_colors)
+    assert len(selected_colors) > 1, "Expected multiple colors to be selected"
